@@ -1,0 +1,190 @@
+/* PostCSS */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=League+Gothic&family=Athiti:wght@400;500;600&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 0, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: 'Athiti', 'Lato', sans-serif;
+}
+
+html {
+  height: -webkit-fill-available;
+  background: rgb(var(--background-rgb));
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera but keep functionality */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox but keep functionality */
+* {
+  scrollbar-width: none;
+}
+
+h1, h2 {
+  font-family: 'League Gothic', sans-serif;
+}
+
+@layer components {
+  .btn {
+    @apply bg-transparent text-text-light border-2 border-text-light rounded-input px-4 py-2 transition-all hover:bg-text-light hover:text-bg-dark;
+  }
+  
+  .input {
+    @apply bg-text-light text-bg-dark rounded-input px-4 py-2 w-full border-2 border-transparent focus:border-accent focus:outline-none transition-all;
+  }
+}
+
+/* Custom checkbox styles */
+input[type="checkbox"] {
+  @apply cursor-pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid rgb(var(--foreground-rgb));
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="checkbox"]:checked {
+  @apply bg-accent border-accent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23222222'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-size: 75% 75%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Add smooth transition for tab switching */
+.tab-content {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Add swipe animation */
+.swipe-container {
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Snow Effect */
+.snow-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.snow {
+  position: absolute;
+  top: -10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(1px);
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) translateX(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(50vh) translateX(20px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(110vh) translateX(-20px);
+    opacity: 0.3;
+  }
+}
+
+.animate-snow {
+  animation: fall var(--fall-duration) linear infinite;
+}
+
+.animate-snow:nth-child(3n) {
+  --fall-duration: 8s;
+}
+
+.animate-snow:nth-child(3n+1) {
+  --fall-duration: 10s;
+}
+
+.animate-snow:nth-child(3n+2) {
+  --fall-duration: 12s;
+}
+
+/* Modal Animation */
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modal-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlay-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.modal-overlay {
+  animation: overlay-fade-in 0.2s ease-out;
+}
+
+.modal-content {
+  animation: modal-fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-content.closing {
+  animation: modal-fade-out 0.2s ease-in forwards;
+}
+
+.modal-overlay.closing {
+  animation: overlay-fade-out 0.2s ease-in forwards;
+}
